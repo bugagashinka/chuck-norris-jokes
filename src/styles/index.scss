@@ -1,4 +1,10 @@
 // General styles
-@import "fonts";
-@import "vars";
-@import "global";
+@import "./fonts";
+@import "./vars";
+@import "./global";
+
+// Home page
+
+// Home page -- Blocks/components styles
+@import "../components/App/App";
+@import "../components/Header/Header";
