@@ -1,0 +1,85 @@
+.category {
+  &__list {
+    @include vertical-list(0, $grey-text-color);
+    margin: 20px 0;
+
+    &-item {
+      margin-right: 10px;
+    }
+  }
+
+  &__tag {
+    margin-bottom: 10px;
+
+    &-link {
+      display: inline-block;
+      padding: 6px 15px;
+      border: 2px solid $light-grey-color;
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 16px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      &.active {
+        color: $main-text-color;
+        background-color: $light-grey-color;
+      }
+    }
+  }
+}
+.form {
+  p {
+    margin: 0;
+    margin-bottom: 10px;
+  }
+
+  &__random,
+  &__category,
+  &__search {
+    &:focus + .radio-label::before {
+      border-color: $outline-color;
+    }
+    &:checked + .radio-label::before {
+      border-color: $main-text-color;
+    }
+  }
+
+  &__search-btn {
+    width: 152px;
+    padding: 10px 5px;
+    height: 42px;
+    background: linear-gradient(92.01deg, #8ea7ff 0%, #7291ff 100%);
+    border-radius: 10px;
+    border: 2px solid transparent;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    outline: none;
+    cursor: pointer;
+
+    &:focus {
+      border-color: $outline-color;
+    }
+
+    &:hover,
+    &:active {
+      background: linear-gradient(92.01deg, #8ea7ff 0%, #667ed3 100%);
+    }
+  }
+  &__search-input {
+    width: 100%;
+    padding: 10px 15px;
+    margin: 10px 0 20px;
+    border: 2px solid $main-text-color;
+    border-radius: 10px;
+    font-size: 16px;
+    color: $grey-text-color;
+    outline: none;
+
+    &:focus {
+      border-color: $outline-color;
+    }
+  }
+}

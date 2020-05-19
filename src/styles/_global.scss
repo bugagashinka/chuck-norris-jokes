@@ -83,6 +83,61 @@ a {
   }
 }
 
+// Global control elements styles
+
+.radio-input:checked,
+.radio-input:not(:checked) {
+  position: relative;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.radio-label {
+  position: relative;
+  display: inline-block;
+  font-size: 18px;
+  padding-left: 35px;
+  cursor: pointer;
+}
+
+.radio-input:not(:checked) + .radio-label::before,
+.radio-input:checked + .radio-label::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid $main-text-color;
+  border-radius: 50%;
+}
+
+.radio-input:not(:checked) + .radio-label::after,
+.radio-input:checked + .radio-label::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: $main-text-color;
+  transition: all 0.2s;
+}
+
+.radio-input:not(:checked) + .radio-label::after {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.radio-input:checked + .radio-label::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
 .button {
   border: 1px solid transparent;
   padding: 0px;
