@@ -1,1 +1,3 @@
-export * as compare from "./compare";
+import * as compare from "./compare";
+
+export { compare };

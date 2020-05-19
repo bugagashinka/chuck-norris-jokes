@@ -1,2 +1,4 @@
-export * as jokesService from "./jokesService";
-export * as jokesLocalStorage from "./localStorageService";
+import * as jokesService from "./jokesService";
+import * as jokesLocalStorage from "./localStorageService";
+
+export { jokesService, jokesLocalStorage };
