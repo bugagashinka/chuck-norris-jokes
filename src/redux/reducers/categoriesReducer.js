@@ -1,6 +1,10 @@
+import { jokesService } from "services";
+
+// Actions types
 const CREATE_CATEGORY_LIST = "categoriesReducer/CREATE_CATEGORY_LIST";
 const UPDATE_CURRENT_CATEGORY = "categoriesReducer/UPDATE_CURRENT_CATEGORY";
 
+// Categories reducers
 const categories = (state = [], action) => {
   switch (action.type) {
     case CREATE_CATEGORY_LIST:
@@ -15,6 +19,7 @@ const currentCategory = (state = "", action) => {
   return state;
 };
 
+// Actions creators
 const createCategoryList = (list) => ({
   type: CREATE_CATEGORY_LIST,
   payload: { value: list },
@@ -25,14 +30,25 @@ const selectCategory = (categoryName) => ({
   payload: { value: categoryName },
 });
 
+// Thunk creators
+const initCategories = () => async (dispatch) => {
+  const list = jokesService.getCategories();
+  dispatch(createCategoryList(list));
+
+  const firstCategory = list.length && list[0];
+  if (firstCategory) {
+    dispatch(selectCategory(firstCategory));
+  }
+};
+
 const state = {
   list: categories,
   currentCategory,
 };
 
 const actions = {
+  initCategories,
   selectCategory,
-  createCategoryList,
 };
 
-export { state as default, actions as categoriesActions };
+export { state, actions };
