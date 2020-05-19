@@ -5,7 +5,12 @@ const CREATE_CATEGORY_LIST = "categoriesReducer/CREATE_CATEGORY_LIST";
 const UPDATE_CURRENT_CATEGORY = "categoriesReducer/UPDATE_CURRENT_CATEGORY";
 
 // Categories reducers
-const categories = (state = [], action) => {
+const initialState = {
+  categories: [],
+  currentCategory: "",
+};
+
+const categories = (state = initialState.categories, action) => {
   switch (action.type) {
     case CREATE_CATEGORY_LIST:
       return [...action.payload.value];
@@ -14,9 +19,16 @@ const categories = (state = [], action) => {
   }
 };
 
-const currentCategory = (state = "", action) => {
+const currentCategory = (state = initialState.currentCategory, action) => {
   if (action.type === UPDATE_CURRENT_CATEGORY) return action.payload.value;
   return state;
+};
+
+const categoriesReducer = (state = initialState, action) => {
+  return {
+    categories: categories(state.categories, action),
+    currentCategory: currentCategory(state.currentCategory, action),
+  };
 };
 
 // Actions creators
@@ -41,14 +53,9 @@ const initCategories = () => async (dispatch) => {
   }
 };
 
-const state = {
-  list: categories,
-  currentCategory,
-};
-
 const actions = {
   initCategories,
   selectCategory,
 };
 
-export { state, actions };
+export { categoriesReducer as default, actions };

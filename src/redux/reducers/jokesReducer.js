@@ -14,7 +14,14 @@ const filterTypeSet = {
 };
 
 // Jokes reducers
-const query = (state = "", action) => {
+const initialState = {
+  query: "",
+  filterType: filterTypeSet.RANDOM,
+  list: [],
+  favourites: [],
+};
+
+const query = (state = initialState.query, action) => {
   switch (action.type) {
     case UPDATE_QUERY_STRING:
       return action.payload.value;
@@ -23,7 +30,7 @@ const query = (state = "", action) => {
   }
 };
 
-const filterType = (state = filterTypeSet.RANDOM, action) => {
+const filterType = (state = initialState.filterType, action) => {
   switch (action.type) {
     case SET_FILTER_TYPE:
       return action.payload.value;
@@ -32,7 +39,7 @@ const filterType = (state = filterTypeSet.RANDOM, action) => {
   }
 };
 
-const jokeList = (state = [], action) => {
+const jokeList = (state = initialState.list, action) => {
   switch (action.type) {
     case ADD_JOKES:
       return [...action.payload.value];
@@ -41,7 +48,7 @@ const jokeList = (state = [], action) => {
   }
 };
 
-const favourites = (state = [], action) => {
+const favourites = (state = initialState.favourites, action) => {
   switch (state.type) {
     case ADD_FAV_JOKES:
       return [...state, ...action.payload.value];
@@ -50,6 +57,15 @@ const favourites = (state = [], action) => {
     default:
       return state;
   }
+};
+
+const jokesReducer = (state = initialState, action) => {
+  return {
+    query: query(state.query, action),
+    filterType: filterType(state.filterType, action),
+    list: jokeList(state.list, action),
+    favourites: favourites(state.favourites, action),
+  };
 };
 
 // Action creators
@@ -128,13 +144,6 @@ const loadFavouriteJokes = () => (dispatch) => {
   dispatch(addFavouriteJokes(favouriteJokes));
 };
 
-const state = {
-  query,
-  filterType,
-  list: jokeList,
-  favourites,
-};
-
 const actions = {
   setFilterType,
   updateQueryString,
@@ -143,4 +152,4 @@ const actions = {
   loadFavouriteJokes,
 };
 
-export { state, actions };
+export { jokesReducer as default, actions };
