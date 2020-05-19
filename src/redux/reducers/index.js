@@ -1,2 +1,2 @@
-export { default as jokes, jokesActions } from "./jokesReducer";
-export { default as categories, categoriesActions } from "./categoriesReducer";
+export { state as jokes, actions as jokesActions } from "./jokesReducer";
+export { state as categories, actions as categoriesActions } from "./categoriesReducer";
