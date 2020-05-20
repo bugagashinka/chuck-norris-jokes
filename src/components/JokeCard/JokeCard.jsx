@@ -3,9 +3,11 @@ import heartIcon from "assets/images/home-page/joke-card/heart.svg";
 import textIcon from "assets/images/home-page/joke-card/text-icon.svg";
 
 const JokeCard = (props) => {
-  const { styleClassPrefix: prefix, tagList = [] } = props;
+  const { styleClassPrefix: prefix, data } = props;
+  const { id = "", url = "", value: text = "", updatedAt = "", categories = [] } = data || {};
 
-  const tagElementList = tagList.map((tag) => <span className={`jokecard-tag ${prefix}__item-tag`}>{tag.name}</span>);
+  const tagElementList = categories.map((tag) => <span className={`jokecard-tag ${prefix}__item-tag`}>{tag}</span>);
+
   return (
     <article className={`jokecard ${prefix}-joke ${prefix}__item`}>
       <header className={`jokecard-header ${prefix}__item-header`}>
@@ -19,19 +21,16 @@ const JokeCard = (props) => {
           <section className={`jokecard-desc ${prefix}__item-desc`}>
             <section className={`jokecard-id ${prefix}__item-id`}>
               ID:
-              <a href="#" className={`jokecard-id__link ${prefix}__item-link`}>
-                XNaAxUduSw6zANDaIEab7A
+              <a href={url} className={`jokecard-id__link ${prefix}__item-link`}>
+                {id}
               </a>
             </section>
-            <section className={`jokecard-text ${prefix}__item-text`}>
-              No one truly knows who's Chuck Norris' real father. No one is biologically strong enough for this. He
-              must've conceived himself.
-            </section>
+            <section className={`jokecard-text ${prefix}__item-text`}>{text}</section>
           </section>
         </div>
       </main>
       <footer className={`jokecard-footer ${prefix}__item-footer`}>
-        <span className={`jokecard-updated ${prefix}__item-update`}>Last update: 1923 hours ago</span>
+        <span className={`jokecard-updated ${prefix}__item-update`}>Last update: {updatedAt}</span>
         {tagElementList}
       </footer>
     </article>
