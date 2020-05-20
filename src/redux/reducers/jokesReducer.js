@@ -124,7 +124,7 @@ const getJokes = (state) => async (dispatch) => {
   }
 };
 
-const toggleJokeLove = (joke) => (dispatch) => {
+const toggleJokeLove = (joke = {}) => (dispatch) => {
   const favouriteJokes = jokesLocalStorage.getFavouriteJokes();
   const isLove = favouriteJokes.some((favJoke) => favJoke.id === joke.id);
 
@@ -144,12 +144,4 @@ const loadFavouriteJokes = () => (dispatch) => {
   dispatch(addFavouriteJokes(favouriteJokes));
 };
 
-const actions = {
-  setFilterType,
-  updateQueryString,
-  toggleJokeLove,
-  getJokes,
-  loadFavouriteJokes,
-};
-
-export { jokesReducer as default, actions };
+export { jokesReducer as default, setFilterType, updateQueryString, toggleJokeLove, getJokes, loadFavouriteJokes };

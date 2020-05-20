@@ -1,17 +1,39 @@
 import React from "react";
+import { connect } from "react-redux";
+import { setFilterType, updateQueryString, toggleJokeLove, getJokes } from "redux/reducers/jokesReducer";
 
-const FilterForm = () => {
+const FilterForm = (props) => {
+  const { state, getJokes } = props;
+  const inputNames = ["random", "category", "search"];
+
+  const [randomInput, categoryInput, searchInput] = inputNames.map((inputName) => {
+    return (
+      <input
+        className={`radio-input form__${inputName}`}
+        type="radio"
+        id={`joke-${inputName}`}
+        name="search"
+        value={`${inputName}`}
+        defaultChecked={state.filterType === inputName.toUpperCase()}
+      />
+    );
+  });
+
+  const getJokesHandler = () => {
+    getJokes(state);
+  };
+
   return (
     <form className="filter-form form">
       <p>
-        <input className="radio-input form__random" type="radio" id="joke-random" name="search" value="random" />
+        {randomInput}
         <label className="radio-label" htmlFor="joke-random">
           Random
         </label>
       </p>
 
       <div className="category">
-        <input className="radio-input form__category" type="radio" id="joke-category" name="search" value="category" />
+        {categoryInput}
         <label className="radio-label" htmlFor="joke-category">
           From caterogies
         </label>
@@ -42,7 +64,7 @@ const FilterForm = () => {
 
       <div className="text-search">
         <p>
-          <input className="radio-input form__search" type="radio" id="joke-search" name="search" value="keyword" />
+          {searchInput}
           <label className="radio-label" htmlFor="joke-search">
             Search
           </label>
@@ -51,9 +73,29 @@ const FilterForm = () => {
         <input type="text" className="form__search-input" name="" placeholder="Free text search..." />
       </div>
 
-      <button className="button form__search-btn">Get a joke</button>
+      <button className="button form__search-btn" type="button" onClick={getJokesHandler}>
+        Get a joke
+      </button>
     </form>
   );
 };
 
-export default FilterForm;
+const mapStateToProps = ({ jokes, categories }) => {
+  const { query, filterType, list: jokeList } = jokes;
+  const { currentCategory } = categories;
+  return {
+    state: {
+      filterType,
+      query,
+      currentCategory,
+      jokeList,
+    },
+  };
+};
+
+export default connect(mapStateToProps, {
+  setFilterType,
+  updateQueryString,
+  toggleJokeLove,
+  getJokes,
+})(FilterForm);
