@@ -14,7 +14,6 @@ body {
   font-family: "Roboto";
   font-size: 14px;
   font-weight: 500;
-  line-height: 20px;
   color: $main-text-color;
   margin: 0;
 }
@@ -83,6 +82,14 @@ a {
   }
 }
 
+@mixin clearfix {
+  &::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+}
+
 // Global control elements styles
 
 .radio-input:checked,
@@ -143,4 +150,23 @@ a {
   padding: 0px;
   background: none;
   outline: none;
+
+  &:focus {
+    border-color: $outline-color;
+  }
+}
+
+.pin-btn {
+  position: relative;
+  width: 20px;
+  height: 17px;
+
+  &__img {
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 20px;
+    height: 17px;
+    @include background-image;
+  }
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "components/Header";
 import FilterForm from "components/FilterForm";
+import JokeCard from "components/JokeCard";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
             <h3 className="promo-subtitle">Let’s try to find a joke for you:</h3>
           </div>
           <FilterForm />
+          <JokeCard />
         </div>
       </section>
     </section>
