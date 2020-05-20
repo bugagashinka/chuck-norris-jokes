@@ -2,7 +2,7 @@ import React from "react";
 
 const FilterForm = () => {
   return (
-    <form className="form">
+    <form className="filter-form form">
       <p>
         <input className="radio-input form__random" type="radio" id="joke-random" name="search" value="random" />
         <label className="radio-label" htmlFor="joke-random">
@@ -51,7 +51,7 @@ const FilterForm = () => {
         <input type="text" className="form__search-input" name="" placeholder="Free text search..." />
       </div>
 
-      <button className="form__search-btn">Get a joke</button>
+      <button className="button form__search-btn">Get a joke</button>
     </form>
   );
 };

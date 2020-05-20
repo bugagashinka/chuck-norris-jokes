@@ -1,0 +1,21 @@
+.filtered {
+  &-joke {
+    padding: 40px;
+  }
+  &__item {
+    background: $light-grey-color;
+
+    &-body {
+      margin-bottom: 28px;
+    }
+
+    &-img {
+      background-color: #fff;
+    }
+
+    &-text {
+      font-size: 18px;
+      line-height: 26px;
+    }
+  }
+}
