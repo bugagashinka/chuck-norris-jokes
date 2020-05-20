@@ -170,3 +170,29 @@ a {
     @include background-image;
   }
 }
+
+// Global media styles
+
+@media (min-width: 1340px) {
+  .container {
+    margin: initial;
+  }
+}
+
+@media (min-width: 1710px) {
+  .container {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 834px) {
+  .container {
+    padding: 0 40px;
+  }
+}
+
+@media (max-width: 380px) {
+  .container {
+    padding: 0 20px;
+  }
+}

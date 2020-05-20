@@ -68,3 +68,10 @@
     }
   }
 }
+
+@media (max-width: 1340px) {
+  .favourite {
+    display: none;
+    right: -480px;
+  }
+}
