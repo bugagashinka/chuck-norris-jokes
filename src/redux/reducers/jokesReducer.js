@@ -130,7 +130,7 @@ const getJokes = (state) => async (dispatch) => {
       dispatch(addJokes(categorizedJokes));
       break;
     case filterTypeSet.SEARCH:
-      const searchedJokes = await markFavJokes(jokesService.searchJoke(state.query));
+      const searchedJokes = markFavJokes(await jokesService.searchJoke(state.query));
       dispatch(addJokes(searchedJokes));
       break;
     default:

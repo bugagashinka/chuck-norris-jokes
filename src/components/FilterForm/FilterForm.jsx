@@ -5,7 +5,7 @@ import { initCategories, selectCategory } from "redux/reducers/categoriesReducer
 import classNames from "classnames";
 
 const FilterForm = (props) => {
-  const { state, getJokes, selectCategory, initCategories, setFilterType } = props;
+  const { state, getJokes, selectCategory, updateQueryString, initCategories, setFilterType } = props;
   const inputNames = ["random", "category", "search"];
 
   useEffect(() => {
@@ -23,6 +23,10 @@ const FilterForm = (props) => {
     if (e.target.checked) {
       setFilterType(e.target.value);
     }
+  };
+
+  const updateSearchField = (e) => {
+    updateQueryString(e.target.value);
   };
 
   // UI elements
@@ -79,7 +83,13 @@ const FilterForm = (props) => {
           </label>
         </p>
 
-        <input type="text" className="form__search-input" name="" placeholder="Free text search..." />
+        <input
+          className="form__search-input"
+          onChange={updateSearchField}
+          type="text"
+          value={state.query}
+          placeholder="Free text search..."
+        />
       </div>
 
       <button className="button form__search-btn" type="button" onClick={getJokesHandler}>
