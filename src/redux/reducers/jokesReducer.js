@@ -49,7 +49,7 @@ const jokeList = (state = initialState.list, action) => {
 };
 
 const favourites = (state = initialState.favourites, action) => {
-  switch (state.type) {
+  switch (action.type) {
     case ADD_FAV_JOKES:
       return [...state, ...action.payload.value];
     case REMOVE_FAV_JOKE:
