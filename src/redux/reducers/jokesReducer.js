@@ -85,7 +85,7 @@ const updateQueryString = (searchText) => ({
 
 const setFilterType = (filter) => ({
   type: SET_FILTER_TYPE,
-  payload: { value: filter },
+  payload: { value: filter.toUpperCase() },
 });
 
 const addJokes = (jokes) => ({

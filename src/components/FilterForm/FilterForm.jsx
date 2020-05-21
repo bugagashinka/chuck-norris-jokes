@@ -5,7 +5,7 @@ import { initCategories, selectCategory } from "redux/reducers/categoriesReducer
 import classNames from "classnames";
 
 const FilterForm = (props) => {
-  const { state, getJokes, selectCategory, initCategories } = props;
+  const { state, getJokes, selectCategory, initCategories, setFilterType } = props;
   const inputNames = ["random", "category", "search"];
 
   useEffect(() => {
@@ -18,6 +18,12 @@ const FilterForm = (props) => {
   };
 
   const clickCategoryHandler = (categoryName) => () => selectCategory(categoryName);
+
+  const updateFilterType = (e) => {
+    if (e.target.checked) {
+      setFilterType(e.target.value);
+    }
+  };
 
   // UI elements
   const categoryStyle = (categoryName) =>
@@ -41,6 +47,7 @@ const FilterForm = (props) => {
         id={`joke-${inputName}`}
         name="search"
         value={`${inputName}`}
+        onChange={updateFilterType}
         defaultChecked={state.filterType === inputName.toUpperCase()}
       />
     );
