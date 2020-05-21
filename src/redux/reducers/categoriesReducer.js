@@ -44,18 +44,12 @@ const selectCategory = (categoryName) => ({
 
 // Thunk creators
 const initCategories = () => async (dispatch) => {
-  const list = jokesService.getCategories();
+  const list = await jokesService.getCategories();
   dispatch(createCategoryList(list));
-
   const firstCategory = list.length && list[0];
   if (firstCategory) {
     dispatch(selectCategory(firstCategory));
   }
 };
 
-const actions = {
-  initCategories,
-  selectCategory,
-};
-
-export { categoriesReducer as default, actions };
+export { categoriesReducer as default, initCategories, selectCategory };

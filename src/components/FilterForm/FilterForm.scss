@@ -11,8 +11,7 @@
   &__tag {
     margin-bottom: 10px;
 
-    &-link {
-      display: inline-block;
+    &-btn {
       padding: 6px 15px;
       border: 2px solid $light-grey-color;
       border-radius: 6px;
@@ -21,7 +20,7 @@
       line-height: 16px;
       letter-spacing: 2px;
       text-transform: uppercase;
-      text-decoration: none;
+      cursor: pointer;
 
       &.active {
         color: $main-text-color;

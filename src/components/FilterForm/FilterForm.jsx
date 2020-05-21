@@ -1,10 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { setFilterType, updateQueryString, toggleJokeLove, getJokes } from "redux/reducers/jokesReducer";
+import { initCategories, selectCategory } from "redux/reducers/categoriesReducer";
+import classNames from "classnames";
 
 const FilterForm = (props) => {
-  const { state, getJokes } = props;
+  const { state, getJokes, selectCategory, initCategories } = props;
   const inputNames = ["random", "category", "search"];
+
+  useEffect(() => {
+    initCategories();
+  }, []);
+
+  // Event handlers
+  const getJokesHandler = () => {
+    getJokes(state);
+  };
+
+  const clickCategoryHandler = (categoryName) => () => selectCategory(categoryName);
+
+  // UI elements
+  const categoryStyle = (categoryName) =>
+    classNames({ button: true, "category__tag-btn": true, active: categoryName === state.currentCategory });
+
+  const categoryElementList = state.categoryList.map((categoryName) => {
+    return (
+      <li className="category__tag category__list-item">
+        <button className={categoryStyle(categoryName)} onClick={clickCategoryHandler(categoryName)} type="button">
+          {categoryName}
+        </button>
+      </li>
+    );
+  });
 
   const [randomInput, categoryInput, searchInput] = inputNames.map((inputName) => {
     return (
@@ -18,10 +45,6 @@ const FilterForm = (props) => {
       />
     );
   });
-
-  const getJokesHandler = () => {
-    getJokes(state);
-  };
 
   return (
     <form className="filter-form form">
@@ -38,28 +61,7 @@ const FilterForm = (props) => {
           From caterogies
         </label>
 
-        <ul className="category__list">
-          <li className="category__tag category__list-item">
-            <a href="#" className="category__tag-link">
-              animal
-            </a>
-          </li>
-          <li className="category__tag category__list-item">
-            <a href="#" className="category__tag-link">
-              career
-            </a>
-          </li>
-          <li className="category__tag category__list-item">
-            <a href="#" className="category__tag-link">
-              celebrity
-            </a>
-          </li>
-          <li className="category__tag category__list-item">
-            <a href="#" className="category__tag-link active">
-              dev
-            </a>
-          </li>
-        </ul>
+        <ul className="category__list">{categoryElementList}</ul>
       </div>
 
       <div className="text-search">
@@ -82,10 +84,11 @@ const FilterForm = (props) => {
 
 const mapStateToProps = ({ jokes, categories }) => {
   const { query, filterType, list: jokeList } = jokes;
-  const { currentCategory } = categories;
+  const { currentCategory, categories: categoryList } = categories;
   return {
     state: {
       filterType,
+      categoryList,
       query,
       currentCategory,
       jokeList,
@@ -98,4 +101,6 @@ export default connect(mapStateToProps, {
   updateQueryString,
   toggleJokeLove,
   getJokes,
+  initCategories,
+  selectCategory,
 })(FilterForm);
