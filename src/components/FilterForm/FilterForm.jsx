@@ -57,6 +57,11 @@ const FilterForm = (props) => {
     );
   });
 
+  const styleFilterType = (mainClass, ...classList) =>
+    classNames(mainClass, ...classList, "filter-type", {
+      active: mainClass.toUpperCase() === state.filterType,
+    });
+
   return (
     <form className="filter-form form">
       <p>
@@ -66,7 +71,7 @@ const FilterForm = (props) => {
         </label>
       </p>
 
-      <div className="category">
+      <div className={styleFilterType("category")}>
         {categoryInput}
         <label className="radio-label" htmlFor="joke-category">
           From caterogies
@@ -75,7 +80,7 @@ const FilterForm = (props) => {
         <ul className="category__list">{categoryElementList}</ul>
       </div>
 
-      <div className="text-search">
+      <div className={styleFilterType("search")}>
         <p>
           {searchInput}
           <label className="radio-label" htmlFor="joke-search">
