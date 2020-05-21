@@ -6,7 +6,11 @@ import classNames from "classnames";
 
 const FilterForm = (props) => {
   const { state, getJokes, selectCategory, updateQueryString, initCategories, setFilterType } = props;
-  const inputNames = ["random", "category", "search"];
+  const inputElementConfigs = [
+    { name: "random", label: "Random" },
+    { name: "category", label: "From caterogies" },
+    { name: "search", label: "Search" },
+  ];
 
   useEffect(() => {
     initCategories();
@@ -43,17 +47,23 @@ const FilterForm = (props) => {
     );
   });
 
-  const [randomInput, categoryInput, searchInput] = inputNames.map((inputName) => {
+  const [randomInput, categoryInput, searchInput] = inputElementConfigs.map(({ name, label }) => {
+    const inputId = `joke-${name}`;
     return (
-      <input
-        className={`radio-input form__${inputName}`}
-        type="radio"
-        id={`joke-${inputName}`}
-        name="search"
-        value={`${inputName}`}
-        onChange={updateFilterType}
-        defaultChecked={state.filterType === inputName.toUpperCase()}
-      />
+      <>
+        <input
+          className={`radio-input form__${name}`}
+          type="radio"
+          id={inputId}
+          name="search"
+          value={`${name}`}
+          onChange={updateFilterType}
+          defaultChecked={state.filterType === name.toUpperCase()}
+        />
+        <label className="radio-label" htmlFor={inputId}>
+          {label}
+        </label>
+      </>
     );
   });
 
@@ -64,29 +74,15 @@ const FilterForm = (props) => {
 
   return (
     <form className="filter-form form">
-      <p>
-        {randomInput}
-        <label className="radio-label" htmlFor="joke-random">
-          Random
-        </label>
-      </p>
+      <p>{randomInput}</p>
 
       <div className={styleFilterType("category")}>
         {categoryInput}
-        <label className="radio-label" htmlFor="joke-category">
-          From caterogies
-        </label>
-
         <ul className="category__list">{categoryElementList}</ul>
       </div>
 
       <div className={styleFilterType("search")}>
-        <p>
-          {searchInput}
-          <label className="radio-label" htmlFor="joke-search">
-            Search
-          </label>
-        </p>
+        <p>{searchInput}</p>
 
         <input
           className="form__search-input"
