@@ -7,6 +7,7 @@ const ADD_FAV_JOKES = "jokesReducer/ADD_FAV_JOKES";
 const REMOVE_FAV_JOKE = "jokesReducer/REMOVE_FAV_JOKE";
 const UPDATE_QUERY_STRING = "jokesReducer/UPDATE_QUERY_STRING";
 const SET_FILTER_TYPE = "jokesReducer/SET_FILTER_TYPE";
+const UPDATE_JOKE_FIELD = "jokesReducer/UPDATE_JOKE_FIELD";
 const filterTypeSet = {
   RANDOM: "RANDOM",
   CATEGORY: "CATEGORY",
@@ -43,6 +44,14 @@ const jokeList = (state = initialState.list, action) => {
   switch (action.type) {
     case ADD_JOKES:
       return [...action.payload.value];
+    case UPDATE_JOKE_FIELD:
+      const { jokeId, field, value } = action.payload.value;
+      return state.map((item) => {
+        if (item.id === jokeId) {
+          return { ...item, [field]: value };
+        }
+        return item;
+      });
     default:
       return state;
   }
@@ -94,6 +103,11 @@ const removeFavouriteJoke = (id) => ({
   payload: { value: id },
 });
 
+const updateJokeField = (jokeId, field, value) => ({
+  type: UPDATE_JOKE_FIELD,
+  payload: { value: { jokeId, field, value } },
+});
+
 // Thunk creators
 const markFavJokes = (jokes) => {
   const favouriteJokes = jokesLocalStorage.getFavouriteJokes();
@@ -126,16 +140,18 @@ const getJokes = (state) => async (dispatch) => {
 
 const toggleJokeLove = (joke = {}) => (dispatch) => {
   const favouriteJokes = jokesLocalStorage.getFavouriteJokes();
-  const isLove = favouriteJokes.some((favJoke) => favJoke.id === joke.id);
+  const loved = favouriteJokes.some((favJoke) => favJoke.id === joke.id);
 
   let updatedFavJokeList = [];
-  if (isLove) {
+  if (loved) {
     updatedFavJokeList = favouriteJokes.filter((favJoke) => favJoke.id !== joke.id);
     dispatch(removeFavouriteJoke(joke.id));
   } else {
-    updatedFavJokeList = [...favouriteJokes, joke];
-    dispatch(addFavouriteJokes([joke]));
+    const favJoke = { ...joke, loved: true };
+    updatedFavJokeList = [...favouriteJokes, favJoke];
+    dispatch(addFavouriteJokes([favJoke]));
   }
+  dispatch(updateJokeField(joke.id, "loved", !loved));
   jokesLocalStorage.addFavouriteJokes(updatedFavJokeList);
 };
 
