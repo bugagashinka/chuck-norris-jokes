@@ -26,17 +26,25 @@
     background-color: $light-grey-color;
   }
 
-  &-desc {
-  }
-
   &-id {
     margin-bottom: 5px;
     font-size: 10px;
     line-height: 14px;
+    font-weight: 500;
     color: $grey-text-color;
 
-    &__link {
+    &__link::after {
+      content: "";
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      margin-left: 5px;
+      background: url(../../assets/images/home-page/joke-card/link-icon.svg);
     }
+  }
+
+  &-label {
+    margin-right: 4px;
   }
 
   &-updated {

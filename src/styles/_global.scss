@@ -161,6 +161,11 @@ a {
   width: 20px;
   height: 17px;
   cursor: pointer;
+  transition: all 0.15s;
+
+  &:hover {
+    transform: scale(1.2);
+  }
 
   &__img {
     position: absolute;

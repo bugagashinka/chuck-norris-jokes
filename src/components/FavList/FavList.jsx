@@ -11,7 +11,7 @@ const FavList = (props) => {
   }, []);
 
   const cardElementList = favourites.map((favJokeData) => (
-    <JokeCard key={favJokeData.id} styleClassPrefix="favourite" data={favJokeData} />
+    <JokeCard key={favJokeData.id} styleClassPrefix="favourite" data={favJokeData} showTag={false} />
   ));
   return (
     <aside className="favourite">

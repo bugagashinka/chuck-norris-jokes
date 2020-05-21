@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { toggleJokeLove } from "redux/reducers/jokesReducer";
 
 const JokeCard = (props) => {
-  const { styleClassPrefix: prefix, data, toggleJokeLove } = props;
+  const { styleClassPrefix: prefix, data, toggleJokeLove, showTag = true } = props;
   const { id = "", url = "", value: text = "", updatedAt = "", categories = [] } = data || {};
 
   const loveJokeHandler = () => {
@@ -28,7 +28,7 @@ const JokeCard = (props) => {
         <div className={`jokecard-img ${prefix}__item-img`} style={{ backgroundImage: `url(${textIcon})` }}></div>
         <section className={`jokecard-desc ${prefix}__item-desc`}>
           <section className={`jokecard-id ${prefix}__item-id`}>
-            ID:
+            <span className={`jokecard-label ${prefix}__item-label`}>ID:</span>
             <a href={url} className={`jokecard-id__link ${prefix}__item-link`}>
               {id}
             </a>
@@ -43,7 +43,7 @@ const JokeCard = (props) => {
   const cardFooter = (
     <footer className={`jokecard-footer ${prefix}__item-footer`}>
       <span className={`jokecard-updated ${prefix}__item-update`}>Last update: {updatedAt}</span>
-      {tagElementList}
+      {showTag && tagElementList}
     </footer>
   );
 
