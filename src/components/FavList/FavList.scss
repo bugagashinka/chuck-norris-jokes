@@ -1,12 +1,23 @@
 .favourite {
-  display: initial;
   position: fixed;
-  right: 0px;
-  width: 480px;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   height: 100%;
-  padding: 40px;
-  padding-right: 20px;
-  background: $light-grey-color;
+  background: rgba(#000, 0.3);
+  visibility: hidden;
+
+  &-content {
+    position: fixed;
+    right: 0px;
+    width: 480px;
+    height: 100%;
+    padding: 40px;
+    padding-right: 20px;
+    background: $light-grey-color;
+    visibility: visible;
+  }
 
   ::-webkit-scrollbar {
     display: none;
@@ -34,9 +45,23 @@
     }
   }
 
+  &-header {
+    margin-bottom: 20px;
+  }
+
+  &__menu-btn {
+    display: block;
+    margin-left: auto;
+    margin-bottom: 20px;
+    height: 28px;
+
+    &::before {
+      background-image: url(../../assets/images/home-page/menu-close-icon.svg);
+    }
+  }
+
   &-title {
     margin: 0;
-    margin-bottom: 20px;
     font-weight: 500;
     font-size: 20px;
     line-height: 28px;
@@ -47,8 +72,7 @@
     height: 100%;
     max-width: 450px;
     width: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden auto;
   }
 
   &-joke {
@@ -71,7 +95,23 @@
 
 @media (max-width: 1340px) {
   .favourite {
-    display: none;
-    right: -480px;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.9s;
+
+    &-content {
+      opacity: 0.8;
+      right: -480px;
+    }
+
+    &.active {
+      visibility: visible;
+      opacity: 1;
+
+      .favourite-content {
+        opacity: 1;
+        right: 0;
+      }
+    }
   }
 }

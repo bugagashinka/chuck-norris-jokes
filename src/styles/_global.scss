@@ -178,6 +178,38 @@ a {
   }
 }
 
+.menu-btn {
+  position: relative;
+  padding: 3px;
+  padding-left: 38px;
+  margin-left: auto;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+  color: $grey-text-color;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    color: $dark-grey-color;
+  }
+
+  &:focus {
+    border-color: $outline-color;
+  }
+
+  &::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    width: 28px;
+    height: 28px;
+    @include background-image;
+    background-image: url(../assets/images/home-page/menu-icon.svg);
+  }
+}
+
 // Global media styles
 
 @media (min-width: 1340px) {

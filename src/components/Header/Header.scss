@@ -3,20 +3,11 @@
   margin-bottom: 37px;
 }
 
-.menu-btn {
-  padding: 3px;
-  padding-left: 38px;
-  margin-left: auto;
-
-  &:focus {
-    border-color: $outline-color;
-  }
-}
-
 .header {
   &__inner {
     display: flex;
     align-items: center;
+    min-height: 36px;
   }
 
   &__headline {
@@ -28,22 +19,9 @@
 
   &__menu-btn {
     display: none;
-    position: relative;
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 28px;
-    color: $grey-text-color;
-    text-decoration: none;
 
-    &::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      display: inline-block;
-      width: 28px;
-      height: 28px;
-      @include background-image;
-      background-image: url(../../assets/images/home-page/menu-closed.svg);
+    &.active {
+      display: none;
     }
   }
 }
