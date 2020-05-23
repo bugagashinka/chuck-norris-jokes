@@ -32,6 +32,7 @@ const getCategories = async () => {
 
 const searchJoke = async (query) => {
   const params = query ? `${QUERY_PARAM}=${query}` : "";
+  if (!params) return;
   const res = await getResource(`${BASE_URL}${SEARCH_ENDPOINT}${params}`);
   return res.result.map(transformJoke);
 };

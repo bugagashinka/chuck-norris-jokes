@@ -4,6 +4,8 @@ import { setFilterType, updateQueryString, toggleJokeLove, getJokes } from "redu
 import { initCategories, selectCategory } from "redux/reducers/categoriesReducer";
 import classNames from "classnames";
 
+const ENTER_KEY_CODE = "Enter";
+
 const FilterForm = (props) => {
   const { state, getJokes, selectCategory, updateQueryString, initCategories, setFilterType } = props;
   const inputElementConfigs = [
@@ -31,6 +33,13 @@ const FilterForm = (props) => {
 
   const updateSearchField = (e) => {
     updateQueryString(e.target.value);
+  };
+
+  const keyPressHandler = (e) => {
+    if (e.key === ENTER_KEY_CODE) {
+      getJokes(state);
+      e.preventDefault();
+    }
   };
 
   // UI elements
@@ -74,7 +83,7 @@ const FilterForm = (props) => {
 
   return (
     <form className="filter-form form">
-      <p>{randomInput}</p>
+      <p className={styleFilterType("random")}>{randomInput}</p>
 
       <div className={styleFilterType("category")}>
         {categoryInput}
@@ -86,6 +95,7 @@ const FilterForm = (props) => {
 
         <input
           className="form__search-input"
+          onKeyDown={keyPressHandler}
           onChange={updateSearchField}
           type="text"
           value={state.query}

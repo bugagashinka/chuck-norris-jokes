@@ -109,7 +109,7 @@ const updateJokeField = (jokeId, field, value) => ({
 });
 
 // Thunk creators
-const markFavJokes = (jokes) => {
+const markFavJokes = (jokes = []) => {
   const favouriteJokes = jokesLocalStorage.getFavouriteJokes();
   const intersection = new Set(compare.intersectionBy(favouriteJokes, jokes, "id"));
 
