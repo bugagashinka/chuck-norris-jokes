@@ -18,7 +18,6 @@ const FavList = (props) => {
     toggleFavList();
   };
 
-  debugger;
   const styleFavouritePanel = classNames("favourite", { active: state.showOnMobile });
 
   const showContent = () => {
@@ -41,7 +40,7 @@ const FavList = (props) => {
     </header>
   );
   return (
-    <aside className={styleFavouritePanel} onClick={menuButtonClick}>
+    <aside className={styleFavouritePanel}>
       <section className="favourite-content">
         {asideHeader}
         <section className="favourite__list">{showContent()}</section>

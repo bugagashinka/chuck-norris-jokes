@@ -50,7 +50,6 @@ const loading = (state, action) => {
 };
 
 const favListComponentState = (state, action) => {
-  debugger;
   switch (action.type) {
     case TOGGLE_FAV_LIST:
       return { ...state, showOnMobile: !state.showOnMobile };
