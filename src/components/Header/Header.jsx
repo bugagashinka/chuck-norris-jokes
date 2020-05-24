@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import { connect } from "react-redux";
-import { toggleFavList } from "redux/reducers/ui/favListReducer";
+import { toggleFavList, uiComponents } from "redux/reducers/uiStateReducer";
 
 const Header = (props) => {
   const { isButtonVisible, toggleFavList } = props;
@@ -29,7 +29,7 @@ const Header = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  isButtonVisible: state.uiState.favListState.showOnMobile,
+  isButtonVisible: state.uiState[uiComponents.FAV_LIST_COMPONENT].showOnMobile,
 });
 
 export default connect(mapStateToProps, { toggleFavList })(Header);

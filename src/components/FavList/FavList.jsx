@@ -2,26 +2,38 @@ import React, { useEffect } from "react";
 import JokeCard from "components/JokeCard";
 import { connect } from "react-redux";
 import { loadFavouriteJokes } from "redux/reducers/jokesReducer";
-import { toggleFavList } from "redux/reducers/ui/favListReducer";
+import { toggleFavList, uiComponents } from "redux/reducers/uiStateReducer";
 import classNames from "classnames";
+import { Loader } from "ui";
 
 const FavList = (props) => {
-  const { favourites, loadFavouriteJokes, showOnMobile, toggleFavList } = props;
+  const { state, loadFavouriteJokes, toggleFavList } = props;
 
   useEffect(() => {
     loadFavouriteJokes();
   }, []);
 
-  const menuButtonClick = () => toggleFavList();
+  const menuButtonClick = (e) => {
+    e.stopPropagation();
+    toggleFavList();
+  };
 
-  const cardElementList = favourites.map((favJokeData) => (
-    <JokeCard key={favJokeData.id} styleClassPrefix="favourite" data={favJokeData} showTag={false} />
-  ));
-  const styleFavouritePanel = classNames("favourite", { active: showOnMobile });
+  debugger;
+  const styleFavouritePanel = classNames("favourite", { active: state.showOnMobile });
+
+  const showContent = () => {
+    const cardElementList = state.favourites
+      .reverse()
+      .map((favJokeData) => (
+        <JokeCard key={favJokeData.id} styleClassPrefix="favourite" data={favJokeData} showTag={false} />
+      ));
+
+    return state.isLoading ? <Loader /> : cardElementList;
+  };
 
   const asideHeader = (
     <header className="favourite-header">
-      {showOnMobile ? (
+      {state.showOnMobile ? (
         <button className="button menu-btn favourite__menu-btn" onClick={menuButtonClick} type="button">
           Favourite
         </button>
@@ -31,18 +43,21 @@ const FavList = (props) => {
     </header>
   );
   return (
-    <aside className={styleFavouritePanel}>
+    <aside className={styleFavouritePanel} onClick={menuButtonClick}>
       <section className="favourite-content">
         {asideHeader}
-        <section className="favourite__list">{cardElementList}</section>
+        <section className="favourite__list">{showContent()}</section>
       </section>
     </aside>
   );
 };
 
 const mapStateToProps = (state) => ({
-  favourites: state.jokes.favourites,
-  showOnMobile: state.uiState.favListState.showOnMobile,
+  state: {
+    favourites: state.jokes.favourites,
+    showOnMobile: state.uiState[uiComponents.FAV_LIST_COMPONENT].showOnMobile,
+    isLoading: state.uiState.loading[uiComponents.FAV_LIST_COMPONENT],
+  },
 });
 
 export default connect(mapStateToProps, {
