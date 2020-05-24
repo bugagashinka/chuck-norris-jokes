@@ -1,29 +1,23 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { setFilterType, updateQueryString, toggleJokeLove, getJokes } from "redux/reducers/jokesReducer";
-import { initCategories, selectCategory } from "redux/reducers/categoriesReducer";
 import classNames from "classnames";
+import Categories from "components/Categories";
 
 const ENTER_KEY_CODE = "Enter";
 
 const FilterForm = (props) => {
-  const { state, getJokes, selectCategory, updateQueryString, initCategories, setFilterType } = props;
+  const { state, getJokes, updateQueryString, setFilterType } = props;
   const inputElementConfigs = [
     { name: "random", label: "Random" },
     { name: "category", label: "From caterogies" },
     { name: "search", label: "Search" },
   ];
 
-  useEffect(() => {
-    initCategories();
-  }, []);
-
   // Event handlers
   const getJokesHandler = () => {
     getJokes(state);
   };
-
-  const clickCategoryHandler = (categoryName) => () => selectCategory(categoryName);
 
   const updateFilterType = (e) => {
     if (e.target.checked) {
@@ -43,18 +37,6 @@ const FilterForm = (props) => {
   };
 
   // UI elements
-  const categoryStyle = (categoryName) =>
-    classNames({ button: true, "category__tag-btn": true, active: categoryName === state.currentCategory });
-
-  const categoryElementList = state.categoryList.map((categoryName) => {
-    return (
-      <li className="category__tag category__list-item">
-        <button className={categoryStyle(categoryName)} onClick={clickCategoryHandler(categoryName)} type="button">
-          {categoryName}
-        </button>
-      </li>
-    );
-  });
 
   const [randomInput, categoryInput, searchInput] = inputElementConfigs.map(({ name, label }) => {
     const inputId = `joke-${name}`;
@@ -76,9 +58,11 @@ const FilterForm = (props) => {
     );
   });
 
+  const isActiveFilter = (name) => name.toUpperCase() === state.filterType;
+
   const styleFilterType = (mainClass, ...classList) =>
     classNames(mainClass, ...classList, "filter-type", {
-      active: mainClass.toUpperCase() === state.filterType,
+      active: isActiveFilter(mainClass),
     });
 
   return (
@@ -87,7 +71,7 @@ const FilterForm = (props) => {
 
       <div className={styleFilterType("category")}>
         {categoryInput}
-        <ul className="category__list">{categoryElementList}</ul>
+        <Categories show={isActiveFilter("category")} />
       </div>
 
       <div className={styleFilterType("search")}>
@@ -110,15 +94,12 @@ const FilterForm = (props) => {
   );
 };
 
-const mapStateToProps = ({ jokes, categories }) => {
+const mapStateToProps = ({ jokes }) => {
   const { query, filterType, list: jokeList } = jokes;
-  const { currentCategory, categories: categoryList } = categories;
   return {
     state: {
       filterType,
-      categoryList,
       query,
-      currentCategory,
       jokeList,
     },
   };
@@ -129,6 +110,4 @@ export default connect(mapStateToProps, {
   updateQueryString,
   toggleJokeLove,
   getJokes,
-  initCategories,
-  selectCategory,
 })(FilterForm);

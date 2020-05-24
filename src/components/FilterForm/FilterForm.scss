@@ -9,37 +9,7 @@
     max-height: 200px;
   }
 }
-.category {
-  &__list {
-    @include vertical-list(0, $grey-text-color);
-    margin: 20px 0;
 
-    &-item {
-      margin-right: 10px;
-    }
-  }
-
-  &__tag {
-    margin-bottom: 10px;
-
-    &-btn {
-      padding: 6px 15px;
-      border: 2px solid $light-grey-color;
-      border-radius: 6px;
-      font-weight: 500;
-      font-size: 12px;
-      line-height: 16px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      cursor: pointer;
-
-      &.active {
-        color: $main-text-color;
-        background-color: $light-grey-color;
-      }
-    }
-  }
-}
 .search {
   margin-bottom: 20px;
 }
