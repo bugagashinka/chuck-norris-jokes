@@ -1,5 +1,7 @@
 ## Jokes App based on [Chuck Norris API](https://api.chucknorris.io/)
 
+[Demo](https://bugagashinka.github.io/chuck-norris-jokes/)
+
 ### Requirements
 
 1. Use Chuck Norris API to get jokes in JSON format - https://api.chucknorris.io/
