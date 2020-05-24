@@ -22,11 +22,9 @@ const FavList = (props) => {
   const styleFavouritePanel = classNames("favourite", { active: state.showOnMobile });
 
   const showContent = () => {
-    const cardElementList = state.favourites
-      .reverse()
-      .map((favJokeData) => (
-        <JokeCard key={favJokeData.id} styleClassPrefix="favourite" data={favJokeData} showTag={false} />
-      ));
+    const cardElementList = state.favourites.map((favJokeData) => (
+      <JokeCard key={favJokeData.id} styleClassPrefix="favourite" data={favJokeData} showTag={false} />
+    ));
 
     return state.isLoading ? <Loader /> : cardElementList;
   };

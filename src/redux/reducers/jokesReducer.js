@@ -61,7 +61,7 @@ const jokeList = (state = initialState.list, action) => {
 const favourites = (state = initialState.favourites, action) => {
   switch (action.type) {
     case ADD_FAV_JOKES:
-      return [...state, ...action.payload.value];
+      return [...action.payload.value, ...state];
     case REMOVE_FAV_JOKE:
       return state.filter(({ id }) => id !== action.payload.value);
     default:
