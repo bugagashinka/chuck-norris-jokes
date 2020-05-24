@@ -6,14 +6,36 @@ const SEARCH_ENDPOINT = "search/";
 const CATEGORY_PARAM = "?category";
 const QUERY_PARAM = "?query";
 
-const getResource = async (url) => {
-  const res = await fetch(url);
+const CLIENT_ERROR__MIN_CODE = 400;
+const CLIENT_ERROR__MAX_CODE = 499;
+const INTERNET_DISCONNECTED_ERROR = "INTERNET_DISCONNECTED_ERROR";
 
-  if (!res.ok) {
-    throw new Error(`Couldn't fetch by ${url}, received ${res.status}`);
+const errorHandler = async (response) => {
+  let error = new Error(`${response.status}: Something went wrong, result couln't be provided`);
+  if (response.status >= CLIENT_ERROR__MIN_CODE && response.status <= CLIENT_ERROR__MAX_CODE) {
+    error.originError = await response.json();
   }
+  return Promise.reject(error);
+};
 
-  return res.json();
+const getResource = async (url) => {
+  try {
+    const res = await fetch(url, {
+      headers: {
+        "Accept-Language": "en-US;q=0.8",
+      },
+    });
+
+    if (!res.ok) {
+      // cases with 4xx/5xx status code
+      return errorHandler(res);
+    }
+    return res.json();
+  } catch (e) {
+    // internet connection case
+    console.error(e);
+    throw new Error({ status: INTERNET_DISCONNECTED_ERROR });
+  }
 };
 
 const getJokeByCategory = async (category = "") => {
@@ -23,7 +45,7 @@ const getJokeByCategory = async (category = "") => {
 const getRandomJoke = async (category) => {
   const params = category ? `${CATEGORY_PARAM}=${category}` : "";
   const joke = await getResource(`${BASE_URL}${RANDOM_JOKE_ENDPOINT}${params}`);
-  return transformJoke(joke);
+  return [transformJoke(joke)];
 };
 
 const getCategories = async () => {
@@ -51,4 +73,4 @@ const transformJoke = (joke) => {
   };
 };
 
-export { getRandomJoke, getJokeByCategory, searchJoke, getCategories };
+export { getRandomJoke, getJokeByCategory, searchJoke, getCategories, INTERNET_DISCONNECTED_ERROR };
