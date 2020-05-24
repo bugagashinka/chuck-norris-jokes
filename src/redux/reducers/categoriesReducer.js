@@ -1,4 +1,5 @@
 import { jokesService } from "services";
+import { toggleLoader, uiComponents } from "./uiStateReducer";
 
 // Actions types
 const CREATE_CATEGORY_LIST = "categoriesReducer/CREATE_CATEGORY_LIST";
@@ -50,6 +51,7 @@ const initCategories = () => async (dispatch) => {
   if (firstCategory) {
     dispatch(selectCategory(firstCategory));
   }
+  dispatch(toggleLoader(uiComponents.CATEGORY_LIST_COMPONENT));
 };
 
-export { categoriesReducer as default, initCategories, selectCategory };
+export { categoriesReducer as default, initCategories, selectCategory, createCategoryList };

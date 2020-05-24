@@ -1,5 +1,6 @@
 import { jokesLocalStorage, jokesService } from "services";
 import { compare } from "utils";
+import { toggleLoader, setError, clearError, uiComponents } from "./uiStateReducer";
 
 // Action types
 const ADD_JOKES = "jokesReducer/ADD_JOKES";
@@ -119,19 +120,34 @@ const markFavJokes = (jokes = []) => {
   });
 };
 
+const getJokeService = async (data, dispatch, service) => {
+  dispatch(toggleLoader(uiComponents.JOKES_LIST_COMPONENT));
+
+  try {
+    dispatch(clearError(uiComponents.JOKES_LIST_COMPONENT));
+    const jokeList = markFavJokes(await service(data));
+    dispatch(addJokes(jokeList));
+  } catch (e) {
+    dispatch(addJokes([]));
+    let component = uiComponents.JOKES_LIST_COMPONENT;
+    if (e.status === jokesService.INTERNET_DISCONNECTED_ERROR) {
+      component = uiComponents.APP_COMPONENT;
+    }
+    dispatch(setError(component, e));
+  }
+  dispatch(toggleLoader(uiComponents.JOKES_LIST_COMPONENT));
+};
+
 const getJokes = (state) => async (dispatch) => {
   switch (state.filterType) {
     case filterTypeSet.RANDOM:
-      const randomJokes = markFavJokes([await jokesService.getRandomJoke()]);
-      dispatch(addJokes(randomJokes));
+      getJokeService(null, dispatch, jokesService.getRandomJoke.bind(jokesService));
       break;
     case filterTypeSet.CATEGORY:
-      const categorizedJokes = markFavJokes([await jokesService.getJokeByCategory(state.currentCategory)]);
-      dispatch(addJokes(categorizedJokes));
+      getJokeService(state.currentCategory, dispatch, jokesService.getJokeByCategory.bind(jokesService));
       break;
     case filterTypeSet.SEARCH:
-      const searchedJokes = markFavJokes(await jokesService.searchJoke(state.query));
-      dispatch(addJokes(searchedJokes));
+      getJokeService(state.query, dispatch, jokesService.searchJoke.bind(jokesService));
       break;
     default:
       break;
@@ -156,8 +172,21 @@ const toggleJokeLove = (joke = {}) => (dispatch) => {
 };
 
 const loadFavouriteJokes = () => (dispatch) => {
+  dispatch(toggleLoader(uiComponents.FAV_LIST_COMPONENT));
   const favouriteJokes = jokesLocalStorage.getFavouriteJokes();
   dispatch(addFavouriteJokes(favouriteJokes));
+  dispatch(toggleLoader(uiComponents.FAV_LIST_COMPONENT));
 };
 
-export { jokesReducer as default, setFilterType, updateQueryString, toggleJokeLove, getJokes, loadFavouriteJokes };
+export {
+  jokesReducer as default,
+  filterTypeSet,
+  setFilterType,
+  updateQueryString,
+  toggleJokeLove,
+  getJokes,
+  loadFavouriteJokes,
+  addJokes,
+  addFavouriteJokes,
+  removeFavouriteJoke,
+};
