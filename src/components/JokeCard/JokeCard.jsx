@@ -4,6 +4,7 @@ import heartInactiveIcon from "assets/images/home-page/joke-card/heart-inactive.
 import textIcon from "assets/images/home-page/joke-card/text-icon.svg";
 import { connect } from "react-redux";
 import { toggleJokeLove } from "redux/reducers/jokesReducer";
+import { formatDateToHours } from "utils/date";
 
 const JokeCard = (props) => {
   const { styleClassPrefix: prefix, data, toggleJokeLove, showTag = true } = props;
@@ -39,10 +40,16 @@ const JokeCard = (props) => {
     </main>
   );
   // Footer
-  const tagElementList = categories.map((tag) => <span className={`jokecard-tag ${prefix}__item-tag`}>{tag}</span>);
+  const tagElementList = categories.map((tag) => (
+    <span key={tag} className={`jokecard-tag ${prefix}__item-tag`}>
+      {tag}
+    </span>
+  ));
   const cardFooter = (
     <footer className={`jokecard-footer ${prefix}__item-footer`}>
-      <span className={`jokecard-updated ${prefix}__item-update`}>Last update: {updatedAt}</span>
+      <span className={`jokecard-updated ${prefix}__item-update`}>
+        Last update: {`${formatDateToHours(updatedAt)} hours ago`}
+      </span>
       {showTag && tagElementList}
     </footer>
   );
