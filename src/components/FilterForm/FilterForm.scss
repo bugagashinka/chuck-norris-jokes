@@ -1,9 +1,18 @@
 .filter-type {
-  max-height: 26px;
+  max-height: 21px;
   overflow-y: hidden;
   margin-bottom: 10px;
   transition: max-height 0.4s;
+}
 
+.search {
+  &.active {
+    height: auto;
+    max-height: 100px;
+  }
+}
+
+.category {
   &.active {
     height: auto;
     max-height: 200px;

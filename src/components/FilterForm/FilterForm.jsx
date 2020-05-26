@@ -67,7 +67,7 @@ const FilterForm = (props) => {
 
   return (
     <form className="filter-form form">
-      <p className={styleFilterType("random")}>{randomInput}</p>
+      <div className={styleFilterType("random")}>{randomInput}</div>
 
       <div className={styleFilterType("category")}>
         {categoryInput}

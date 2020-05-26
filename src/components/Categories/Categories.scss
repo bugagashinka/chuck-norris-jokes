@@ -1,4 +1,6 @@
 .category {
+  transition: max-height 0.4s;
+
   &__list {
     @include vertical-list(0, $grey-text-color);
     margin: 20px 0;

@@ -29,12 +29,11 @@ const Categories = (props) => {
         </li>
       );
     });
-    if (!show) return;
 
-    return isLoading ? <Loader /> : categoryElementList;
+    return isLoading ? <Loader /> : <ul className="category__list">{categoryElementList}</ul>;
   };
 
-  return <ul className="category__list">{showCategories()}</ul>;
+  return showCategories();
 };
 
 const mapStateToProps = ({ categories: { categories, currentCategory }, uiState }) => ({
