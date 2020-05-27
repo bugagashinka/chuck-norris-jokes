@@ -1,5 +1,5 @@
 import { jokesService } from "services";
-import { toggleLoader, uiComponents } from "./uiStateReducer";
+import { toggleLoader, uiComponents, setError } from "./uiStateReducer";
 
 // Actions types
 const CREATE_CATEGORY_LIST = "categoriesReducer/CREATE_CATEGORY_LIST";
@@ -45,13 +45,19 @@ const selectCategory = (categoryName) => ({
 
 // Thunk creators
 const initCategories = () => async (dispatch) => {
-  const list = await jokesService.getCategories();
-  dispatch(createCategoryList(list));
-  const firstCategory = list.length && list[0];
-  if (firstCategory) {
-    dispatch(selectCategory(firstCategory));
+  try {
+    const list = await jokesService.getCategories();
+    dispatch(createCategoryList(list));
+    const firstCategory = list.length && list[0];
+    if (firstCategory) {
+      dispatch(selectCategory(firstCategory));
+    }
+    dispatch(toggleLoader(uiComponents.CATEGORY_LIST_COMPONENT));
+  } catch (e) {
+    if (e.status === jokesService.INTERNET_DISCONNECTED_ERROR) {
+      dispatch(setError(uiComponents.APP_COMPONENT, e));
+    }
   }
-  dispatch(toggleLoader(uiComponents.CATEGORY_LIST_COMPONENT));
 };
 
 export { categoriesReducer as default, initCategories, selectCategory, createCategoryList };

@@ -34,7 +34,9 @@ const getResource = async (url) => {
   } catch (e) {
     // internet connection case
     console.error(e);
-    throw new Error({ status: INTERNET_DISCONNECTED_ERROR });
+    const disconnectError = new Error();
+    disconnectError.status = INTERNET_DISCONNECTED_ERROR;
+    throw disconnectError;
   }
 };
 
