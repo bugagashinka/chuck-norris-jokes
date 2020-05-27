@@ -3,6 +3,7 @@ import Header from "components/Header";
 import FilterForm from "components/FilterForm";
 import FavList from "components/FavList";
 import JokesList from "components/JokesList";
+import GlobalErrorMessage from "ui/GlobalErrorMessage";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
             <h2 className="promo-title">Hey!</h2>
             <h3 className="promo-subtitle">Let’s try to find a joke for you:</h3>
           </div>
+          <GlobalErrorMessage />
           <FilterForm />
           <JokesList />
         </div>

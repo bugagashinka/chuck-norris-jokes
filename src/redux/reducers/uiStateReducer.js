@@ -75,4 +75,7 @@ const toggleLoader = (componentName) => ({ type: TOGGLE_LOADER, component: compo
 
 const toggleFavList = () => ({ type: TOGGLE_FAV_LIST });
 
-export { uiState as default, setError, toggleLoader, toggleFavList, uiComponents, clearError };
+// Thunk creators
+const closeGlobalErrorMessage = () => async (dispatch) => dispatch(clearError(uiComponents.APP_COMPONENT));
+
+export { uiState as default, setError, toggleLoader, toggleFavList, uiComponents, clearError, closeGlobalErrorMessage };
