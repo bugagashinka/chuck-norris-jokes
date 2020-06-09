@@ -21,8 +21,7 @@ const categories = (state = initialState.categories, action) => {
 };
 
 const currentCategory = (state = initialState.currentCategory, action) => {
-  if (action.type === UPDATE_CURRENT_CATEGORY) return action.payload.value;
-  return state;
+  return action.type === UPDATE_CURRENT_CATEGORY ? action.payload.value : state;
 };
 
 const categoriesReducer = (state = initialState, action) => {

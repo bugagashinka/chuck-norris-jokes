@@ -37,6 +37,7 @@ const FilterForm = (props) => {
   };
 
   // UI elements
+  const isActiveFilter = (name) => name.toUpperCase() === state.filterType;
 
   const [randomInput, categoryInput, searchInput] = inputElementConfigs.map(({ name, label }) => {
     const inputId = `joke-${name}`;
@@ -49,7 +50,7 @@ const FilterForm = (props) => {
           name="search"
           value={`${name}`}
           onChange={updateFilterType}
-          defaultChecked={state.filterType === name.toUpperCase()}
+          defaultChecked={isActiveFilter(name)}
         />
         <label className="radio-label" htmlFor={inputId}>
           {label}
@@ -57,8 +58,6 @@ const FilterForm = (props) => {
       </>
     );
   });
-
-  const isActiveFilter = (name) => name.toUpperCase() === state.filterType;
 
   const styleFilterType = (mainClass, ...classList) =>
     classNames(mainClass, ...classList, "filter-type", {
