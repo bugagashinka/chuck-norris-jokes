@@ -15,7 +15,7 @@ const JokesList = (props) => {
       <>
         {isLoading && <Loader />}
         {<ErrorMessage error={error} />}
-        {!(isLoading && error) && jokeElementList}
+        {!(isLoading || error) && jokeElementList}
       </>
     );
   };
