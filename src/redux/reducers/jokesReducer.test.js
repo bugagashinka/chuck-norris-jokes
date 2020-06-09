@@ -2,8 +2,7 @@ import jokesReducer, {
   setFilterType,
   updateQueryString,
   addJokes,
-  addFavouriteJokes,
-  removeFavouriteJoke,
+  setFavouriteJokes,
   filterTypeSet,
 } from "./jokesReducer";
 
@@ -80,10 +79,10 @@ test("Clear jokes list", () => {
   expect(newState.list.length).toBe(0);
 });
 
-test("Add joke into favourites list", () => {
+test("Set jokes into favourites list", () => {
   const dummyFavJokeList = [{ text: "bla bla" }];
   // Action
-  const action = addFavouriteJokes(dummyFavJokeList);
+  const action = setFavouriteJokes(dummyFavJokeList);
 
   // Calc new state
   const newState = jokesReducer(initialSate, action);
@@ -93,20 +92,16 @@ test("Add joke into favourites list", () => {
   expect(newState.favourites[0].text).toBe("bla bla");
 });
 
-test("Remove joke from favourites list", () => {
-  // Initial state
-  const initialSate = {
-    favourites: [{ id: 101, text: "bla bla" }],
-  };
-
-  const dummyFavJoke = { id: 101, text: "bla bla" };
-
+test("Replace jokes in favourites list", () => {
+  const initialFavJokeList = [{ text: "bla bla" }];
+  const dummyFavJokeList = [{ text: "new new" }, { text: "more new" }];
   // Action
-  const action = removeFavouriteJoke(dummyFavJoke.id);
+  const action = setFavouriteJokes(dummyFavJokeList);
 
   // Calc new state
-  const newState = jokesReducer(initialSate, action);
+  const newState = jokesReducer(initialFavJokeList, action);
 
   // Check result
-  expect(newState.favourites.length).toBe(0);
+  expect(newState.favourites.length).toBe(2);
+  expect(newState.favourites[1].text).toBe("more new");
 });

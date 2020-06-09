@@ -4,8 +4,7 @@ import { toggleLoader, setError, clearError, uiComponents } from "./uiStateReduc
 
 // Action types
 const ADD_JOKES = "jokesReducer/ADD_JOKES";
-const ADD_FAV_JOKES = "jokesReducer/ADD_FAV_JOKES";
-const REMOVE_FAV_JOKE = "jokesReducer/REMOVE_FAV_JOKE";
+const SET_FAV_JOKES = "jokesReducer/SET_FAV_JOKES";
 const UPDATE_QUERY_STRING = "jokesReducer/UPDATE_QUERY_STRING";
 const SET_FILTER_TYPE = "jokesReducer/SET_FILTER_TYPE";
 const UPDATE_JOKE_FIELD = "jokesReducer/UPDATE_JOKE_FIELD";
@@ -60,10 +59,8 @@ const jokeList = (state = initialState.list, action) => {
 
 const favourites = (state = initialState.favourites, action) => {
   switch (action.type) {
-    case ADD_FAV_JOKES:
-      return [...action.payload.value, ...state];
-    case REMOVE_FAV_JOKE:
-      return state.filter(({ id }) => id !== action.payload.value);
+    case SET_FAV_JOKES:
+      return [...action.payload.value];
     default:
       return state;
   }
@@ -94,14 +91,9 @@ const addJokes = (jokes) => ({
   payload: { value: jokes },
 });
 
-const addFavouriteJokes = (jokes) => ({
-  type: ADD_FAV_JOKES,
+const setFavouriteJokes = (jokes) => ({
+  type: SET_FAV_JOKES,
   payload: { value: jokes },
-});
-
-const removeFavouriteJoke = (id) => ({
-  type: REMOVE_FAV_JOKE,
-  payload: { value: id },
 });
 
 const updateJokeField = (jokeId, field, value) => ({
@@ -156,25 +148,25 @@ const getJokes = (state) => async (dispatch) => {
 
 const toggleJokeLove = (joke = {}) => (dispatch) => {
   const favouriteJokes = jokesLocalStorage.getFavouriteJokes();
-  const loved = favouriteJokes.some((favJoke) => favJoke.id === joke.id);
-
   let updatedFavJokeList = [];
-  if (loved) {
+
+  if (joke.loved) {
     updatedFavJokeList = favouriteJokes.filter((favJoke) => favJoke.id !== joke.id);
-    dispatch(removeFavouriteJoke(joke.id));
   } else {
     const favJoke = { ...joke, loved: true };
-    updatedFavJokeList = [...favouriteJokes, favJoke];
-    dispatch(addFavouriteJokes([favJoke]));
+    updatedFavJokeList = [favJoke, ...favouriteJokes];
   }
-  dispatch(updateJokeField(joke.id, "loved", !loved));
+
+  dispatch(setFavouriteJokes(updatedFavJokeList));
+
+  dispatch(updateJokeField(joke.id, "loved", !joke.loved));
   jokesLocalStorage.addFavouriteJokes(updatedFavJokeList);
 };
 
 const loadFavouriteJokes = () => (dispatch) => {
   dispatch(toggleLoader(uiComponents.FAV_LIST_COMPONENT));
   const favouriteJokes = jokesLocalStorage.getFavouriteJokes();
-  dispatch(addFavouriteJokes(favouriteJokes));
+  dispatch(setFavouriteJokes(favouriteJokes));
   dispatch(toggleLoader(uiComponents.FAV_LIST_COMPONENT));
 };
 
@@ -187,6 +179,5 @@ export {
   getJokes,
   loadFavouriteJokes,
   addJokes,
-  addFavouriteJokes,
-  removeFavouriteJoke,
+  setFavouriteJokes,
 };
