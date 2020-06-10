@@ -26,6 +26,12 @@
   }
 }
 
+@media (max-width: 360px) {
+  .home-page__header {
+    padding: 20px 0 40px;
+  }
+}
+
 @media (max-width: 1340px) {
   .header__menu-btn {
     display: block;

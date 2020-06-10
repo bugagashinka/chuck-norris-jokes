@@ -92,10 +92,25 @@
   }
 }
 
-@media (max-width: 834px) {
+@media (max-width: 360px) {
   .favourite {
     &-content {
       padding: 20px;
+    }
+  }
+}
+
+@media (max-width: 834px) {
+  .favourite {
+    &-content {
+      min-width: initial;
+    }
+    &__list {
+      width: initial;
+    }
+
+    ::-webkit-scrollbar {
+      display: none;
     }
   }
 }
