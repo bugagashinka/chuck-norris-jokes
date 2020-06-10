@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/chuck-norris-jokes/static/css/main.ed1df270.chunk.css",
+    "main.css": "/chuck-norris-jokes/static/css/main.23160872.chunk.css",
     "main.js": "/chuck-norris-jokes/static/js/main.e4b56970.chunk.js",
     "main.js.map": "/chuck-norris-jokes/static/js/main.e4b56970.chunk.js.map",
     "runtime-main.js": "/chuck-norris-jokes/static/js/runtime-main.1b027245.js",
@@ -8,9 +8,9 @@
     "static/js/2.17b95143.chunk.js": "/chuck-norris-jokes/static/js/2.17b95143.chunk.js",
     "static/js/2.17b95143.chunk.js.map": "/chuck-norris-jokes/static/js/2.17b95143.chunk.js.map",
     "index.html": "/chuck-norris-jokes/index.html",
-    "precache-manifest.b34a4906b8b5a69ce2de14206b3908a3.js": "/chuck-norris-jokes/precache-manifest.b34a4906b8b5a69ce2de14206b3908a3.js",
+    "precache-manifest.fcae943939704583d0a226e78d6dc4d5.js": "/chuck-norris-jokes/precache-manifest.fcae943939704583d0a226e78d6dc4d5.js",
     "service-worker.js": "/chuck-norris-jokes/service-worker.js",
-    "static/css/main.ed1df270.chunk.css.map": "/chuck-norris-jokes/static/css/main.ed1df270.chunk.css.map",
+    "static/css/main.23160872.chunk.css.map": "/chuck-norris-jokes/static/css/main.23160872.chunk.css.map",
     "static/js/2.17b95143.chunk.js.LICENSE.txt": "/chuck-norris-jokes/static/js/2.17b95143.chunk.js.LICENSE.txt",
     "static/media/index.scss": "/chuck-norris-jokes/static/media/roboto-regular-webfont.f68f2045.woff",
     "static/media/heart-inactive.svg": "/chuck-norris-jokes/static/media/heart-inactive.3369cbd8.svg",
@@ -20,7 +20,7 @@
   "entrypoints": [
     "static/js/runtime-main.1b027245.js",
     "static/js/2.17b95143.chunk.js",
-    "static/css/main.ed1df270.chunk.css",
+    "static/css/main.23160872.chunk.css",
     "static/js/main.e4b56970.chunk.js"
   ]
 }
